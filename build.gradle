@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id "io.vertx.vertx-plugin" version "1.1.1"
 }
 
 group 'org.example'
@@ -10,12 +11,18 @@ repositories {
     mavenCentral()
 }
 
+vertx {
+    mainVerticle = 'io.masmovil.vertx.starter.VerticleLauncher'
+}
+
 def vertxVersion = '4.3.1'
 
 dependencies {
     implementation("io.vertx:vertx-web:${vertxVersion}")
     implementation("io.vertx:vertx-health-check:${vertxVersion}")
+    implementation( "io.vertx:vertx-rx-java3:${vertxVersion}")
     implementation("ch.qos.logback:logback-classic:1.2.3")
+//    runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.78.Final:osx-x86_64")
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'

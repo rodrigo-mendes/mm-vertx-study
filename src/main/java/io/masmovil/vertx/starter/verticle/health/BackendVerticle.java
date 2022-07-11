@@ -1,11 +1,13 @@
 package io.masmovil.vertx.starter.verticle.health;
 
-import io.vertx.core.AbstractVerticle;
+
+import io.reactivex.rxjava3.core.Completable;
 import io.vertx.core.json.JsonObject;
-import io.vertx.ext.healthchecks.HealthCheckHandler;
-import io.vertx.ext.healthchecks.HealthChecks;
 import io.vertx.ext.healthchecks.Status;
-import io.vertx.ext.web.Router;
+import io.vertx.rxjava3.core.AbstractVerticle;
+import io.vertx.rxjava3.ext.healthchecks.HealthCheckHandler;
+import io.vertx.rxjava3.ext.healthchecks.HealthChecks;
+import io.vertx.rxjava3.ext.web.Router;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,12 +24,20 @@ public class BackendVerticle extends AbstractVerticle {
         vertx.createHttpServer()
                 .requestHandler(router)
                 .listen(HTTP_PORT)
-                .onSuccess(server -> log.info("Server started and listening on port {}", server.actualPort()))
-                .onFailure(event -> {
+                .doOnSuccess(server -> log.info("Server started and listening on port {}", server.actualPort()))
+                .doOnError(event -> {
                             log.error("Having problem to start Server");
                             System.exit(1);
                         });
     }
+
+
+//    public Completable rxStart() {
+//        return vertx.createHttpServer()
+//                .requestHandler(req -> req.response().end("Hello World"))
+//                .rxListen(HTTP_PORT)
+//                .ignoreElement();
+//    }
 
     private static final String VERSION = "version";
     private static final String ENV_NAME = "environment";
