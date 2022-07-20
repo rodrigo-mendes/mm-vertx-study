@@ -1,13 +1,20 @@
 package io.masmovil.vertx.starter;
 
 import io.masmovil.vertx.starter.verticle.health.BackendVerticle;
-import io.vertx.core.VertxOptions;
+import io.masmovil.vertx.starter.verticle.health.RxBackendVerticle;
 import io.vertx.rxjava3.core.Vertx;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class VerticleLauncher {
+
+    private static final Logger log = LoggerFactory.getLogger(VerticleLauncher.class);
     public static void main(String[] args) {
-        VertxOptions options = new VertxOptions();
-        options.setWorkerPoolSize(10);
-        Vertx.vertx().deployVerticle(new BackendVerticle());
+        Vertx.vertx()
+                .rxDeployVerticle(new RxBackendVerticle())
+                .subscribe();
+        Vertx.vertx()
+                .rxDeployVerticle(new BackendVerticle())
+                .subscribe();
     }
 }

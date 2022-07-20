@@ -1,0 +1,68 @@
+openapi: 3.0.3
+info:
+  title: Health EndPoint specification
+  description: Health EndPoint specification
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /health:
+    get:
+      tags:
+        - pet
+      summary: Finds Pets by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: health
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Health'
+        5XX:
+          description: Internal problems
+          content: { }
+components:
+  schemas:
+    Health:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - UP
+            - DOWN
+        checks:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              status:
+                type: string
+                enum:
+                  - UP
+                  - DOWN
+              data:
+                type: object
+                properties:
+                  version:
+                    type: string
+              environment:
+                type: string
+                enum:
+                  - local
+                  - dev
+                  - stage
+                  - prod
+              swagger-version:
+                type: string
+        outcome:
+          type: string
+          enum:
+            - UP
+            - DOWN

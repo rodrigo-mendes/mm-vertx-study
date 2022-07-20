@@ -4,15 +4,19 @@ plugins {
     id "io.vertx.vertx-plugin" version "1.1.1"
 }
 
-group 'org.example'
+group 'io.masmovil.vertx'
 version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
+application {
+    mainClassName = "io.masmovil.vertx.starter.VerticleLauncher"
+}
+
 vertx {
-    mainVerticle = 'io.masmovil.vertx.starter.VerticleLauncher'
+    mainVerticle = 'io.masmovil.vertx.starter.verticle.health.BackendVerticle'
 }
 
 def vertxVersion = '4.3.1'
@@ -21,7 +25,8 @@ dependencies {
     implementation("io.vertx:vertx-web:${vertxVersion}")
     implementation("io.vertx:vertx-health-check:${vertxVersion}")
     implementation( "io.vertx:vertx-rx-java3:${vertxVersion}")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
+    implementation("io.vertx:vertx-web-openapi:${vertxVersion}")
+    implementation('ch.qos.logback:logback-classic:1.2.11')
 //    runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.78.Final:osx-x86_64")
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'

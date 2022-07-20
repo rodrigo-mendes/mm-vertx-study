@@ -1,0 +1,6 @@
+GET http://localhost:8090/health
+Accept: application/json
+
+###
+GET http://localhost:8099/health
+Accept: application/json
